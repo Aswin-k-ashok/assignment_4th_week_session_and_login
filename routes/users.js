@@ -54,6 +54,12 @@ router.post('/login', function(req, res) {
   
 });
 
+router.get('/logout',function(req,res){
+  req.session.user=null
+  req.session.isLogged=false
+  res.redirect('/login')
+})
+
 
 
 module.exports = router;

@@ -1,25 +1,38 @@
-<div class="container-fluid bg-dark mt-5 p-5 text-light d-flex justify-content-around ">
-    <div>
-        <h1 style="font-size: 8em;">welcome <br>user</h1>
-    </div>
-{{#if err}}
-<div class="alert alert-danger p-5">
-    {{{err}}}
-</div>
-{{/if}}
-    <form action="/login" method="POST" class="bg-secondary bg-outline-danger rounded border border-white p-5">
-        <h1 class="mb-5">Log In</h1>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-          
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+<div class="container-fluid bg-dark mt-5 p-5 text-light   ">
+  {{#if err}}<div class="alert alert-danger p-5 w-100">{{{err}}}</div>{{/if}}
 
-</div>
+  <div class="container">
+    <div class="row"></div>
+    <div class="row">
+
+      <div class="col-sm-12 col-md-12 col-lg-6">
+        <div>
+          <h1 style="font-size: 7em;">welcome <br>user</h1>
+        </div>
+      </div>
+
+
+
+      <div class="col">
+        
+        <form action="/login" method="POST"
+          class="bg-secondary bg-outline-danger rounded border border-white p-5 float-left">
+          <h1 class="mb-5">Log In</h1>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+              placeholder="Enter email">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input name="password" type="password" class="form-control" id="exampleInputPassword1"
+              placeholder="Password">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
