@@ -1,67 +1,58 @@
-const {response} = require('express');
 var express = require('express');
+const { render } = require('../app');
 var router = express.Router();
 
 /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
-var verifyLogin = (req,res,next)=>{
-  if(req.session.userLoggedIn){
-    next()
-  }
-  else{
+router.get('/', function(req, res) {
+  if(req.session.user){
+    res.render('user/home',{user:req.session.user})
+  }else{
     res.redirect('/login')
+    
+
   }
-}
-
-
-
-router.get('/login',(req,res)=>{
+  
+});
+router.get('/login', function(req, res) {
   if(req.session.user){
     res.redirect('/')
   }else{
-    res.render('user/login',{"LoginErr":req.session.userLoginErr })
-    req.session.userLoginErr =false
-  }
-})
 
-function doLogin(formDatas){
-  const formEmail =formDatas.Email;
-  const formPassword = formDatas.Password;
-  var response = {}
-  var user = {Email: 'hello@hey.com',_id:123, name:'aswin',Password:'asdf'}
-  if(user.Email===formEmail && user.Password==formPassword){
-    console.log("Login Sucess");
-    response.user = user
-    response.status =true
-  }else{
-    console.log("Login Failed :No user")
-    response.user =null;
-    response.status=false;
+    res.render('user/login',{err:req.session.err})
+    req.session.err=null
   }
-  return response;
+  
+});
+function isValid(formData){
+  var response = {}
+  const email=formData.email
+  const password=formData.password
+  const user = {email:"hello@hey.com",password:"asdf"}
+  if(email==user.email && password==user.password){
+    response.user=user
+    response.status=true
+  }else{
+    response.user=null
+    response.status=false
+  }
+  return response
 }
 
-router.post('/login',(req,res)=>{
-  var response = doLogin(req.body);
-  if(response.status){
-    req.session.user = response.user
-    req.session.userLoggedIn =true
+router.post('/login', function(req, res) {
+
+  const response=isValid(req.body)
+  if(response.status==true){
+    req.session.user=response.user
+    req.session.isLogged=true
     res.redirect('/')
   }else{
-    req.session.user = null
-    req.session.userLoggedIn = false
-    req.session.userLoginErr = "Invalid Username or Password"
+    req.session.user=null
+    req.session.isLogged=false
+    req.session.err="invalid user"
     res.redirect('/login')
   }
-})
-
-router.get('/logout',(req,res)=>{
-  req.session.user = null
-  req.session.userLoggedIn = false
-  res.redirect('/')
-})
+  
+});
 
 
 

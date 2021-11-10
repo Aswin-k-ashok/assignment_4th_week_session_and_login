@@ -3,35 +3,33 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const session = require('express-session');
-const hbs =require('express-handlebars')
+var session = require('express-session');
+var hbs = require('express-handlebars')
+
 
 var usersRouter = require('./routes/users');
 
 var app = express();
 
-
-
 // view engine setup
-app.set('view', path.join(__dirname, 'view'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-app.engine('hbs',hbs({
+app.engine('hbs', hbs({
   extname:'hbs',
   defaultLayout: 'layout',
-  layoutsDir:__dirname + '/view/layout',
-  partialsDir:__dirname + '/views/partials'
+  layoutsDir: __dirname + '/views/layout/',
+  partialsDir: __dirname + '/views/partials'
 }));
-
-
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//session 
+
 app.use(session({secret: "Key", cookie: {maxAge: 6000000}}))
+
 
 app.use('/', usersRouter);
 
